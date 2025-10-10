@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Emotion Recorder</title>
+    <link rel="preconnect" href="https://unpkg.com" />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+    <style>
+      :root { --bg:#0b1220; --fg:#e5e7eb; --muted:#9ca3af; --accent:#2563EB; --card:#111827; }
+      * { box-sizing: border-box; }
+      body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background: var(--bg); color: var(--fg); }
+      header { padding: 20px; text-align: center; }
+      main { max-width: 800px; margin: 0 auto; padding: 16px; }
+      .card { background: var(--card); border-radius: 10px; padding: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.25); }
+      .row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+      button { background: var(--accent); border: none; color: white; padding: 10px 14px; border-radius: 8px; cursor: pointer; font-weight: 600; }
+      button:disabled { background: #4b5563; cursor: not-allowed; }
+      #timer { font-variant-numeric: tabular-nums; font-weight: 700; color: var(--muted); }
+      #wave { height: 120px; background: #0f172a; border-radius: 8px; overflow: hidden; }
+      audio { width: 100%; margin-top: 10px; }
+      .result { margin-top: 16px; font-size: 1.1rem; }
+      .muted { color: var(--muted); }
+      .mt { margin-top: 12px; }
+      .sep { height: 1px; background: #1f2937; margin: 16px 0; }
+      code { background: #0f172a; padding: 2px 6px; border-radius: 6px; }
+      a { color: #93c5fd; }
+    </style>
+    <script src="https://unpkg.com/wavesurfer.js@7"></script>
+  </head>
+  <body>
+    <header>
+      <h1>Speech Emotion Recognition</h1>
+      <p class="muted">Record, preview waveform, and get a prediction from the server.</p>
+    </header>
+    <main>
+      <div class="card">
+        <div class="row">
+          <button id="btnRecord">Start Recording</button>
+          <button id="btnStop" disabled>Stop</button>
+          <span id="timer">00:00</span>
+        </div>
+
+        <div id="wave" class="mt"></div>
+        <audio id="player" controls class="mt"></audio>
+
+        <div class="row mt">
+          <button id="btnUpload" disabled>Upload & Predict</button>
+          <span id="status" class="muted"></span>
+        </div>
+
+        <div class="result" id="result"></div>
+      </div>
+
+      <div class="card mt">
+        <h3>How to serve this page</h3>
+        <p>From the project root, run a simple HTTP server:</p>
+        <pre><code>python -m http.server 8000</code></pre>
+        <p>Then open <a href="http://localhost:8000/web/" target="_blank">http://localhost:8000/web/</a>.</p>
+        <p class="muted">Ensure your Flask API is running at <code>http://localhost:8080</code> (default). You can change the API URL in <code>web/app.js</code>.</p>
+      </div>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+  </html>
+
+
